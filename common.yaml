@@ -1,0 +1,27 @@
+---
+- hosts: all
+  user: kube
+  become: true
+  vars_files:
+    - vars/common
+
+  roles:
+    - role: common
+
+- hosts: k8s-master
+  user: kube
+  become: true
+  vars_files:
+    - vars/master
+
+  roles:
+    - role: kube-master
+
+- hosts: k8s-node
+  user: kube
+  become: true
+  vars_files:
+    - vars/node
+
+  roles:
+    - role: kube-node

@@ -1,0 +1,63 @@
+---
+- name: Creating 'kubernetes' group
+  group:
+    name: kubernetes
+    state: present
+
+- name: Creating 'docker' group
+  group:
+    name: docker
+    state: present
+
+- name: Creating a default user 'kube' for system wide operations
+  user:
+    name: kube
+    comment: 'Kubernetes system wide operation user'
+    state: present
+    password: '{{ kube_user_password }}'
+    group:
+      - 'kubernetes'
+      - 'docker'
+    append: yes
+
+- name: Updating system to the latest packages
+  zypper:
+    name: '*'
+    state: latest
+    update_cache: yes
+
+- name: Installing helpful packages
+  zypper: >
+    name = {{ item }} state=latest
+    with_items:
+      - 'nc'
+      - 'nmap'
+      - 'wget'
+      - 'curl'
+      - 'tmux'
+      - 'mlocate'
+      - 'net-tools'
+      - 'nload'
+      - 'htop'
+    type: package
+
+- name: Creating tmp kubernetes download folder
+  file:
+    path: /tmp/kubernetes/download
+    state: directory
+    mode: 0755
+
+- name: Creating tmp docker download folder
+  file:
+    path: /tmp/docker/download
+    state: directory
+    mode: 0755
+
+- name: Creating tmp etcd download folder
+  file:
+    path: /tmp/etcd/download
+    state: directory
+    mode: 0755
+
+- include: docker.yaml
+- include: etcd.yaml

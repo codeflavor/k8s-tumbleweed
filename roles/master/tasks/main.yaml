@@ -1,0 +1,12 @@
+---
+- name: Download Kubernetes 1.7.0 server files
+  get_url:
+    url: https://dl.k8s.io/v1.7.0/kubernetes-server-linux-amd64.tar.gz
+    dest: /tmp/kubernetes/download
+    checksum: sha256:175fc9360d4f26b5f60b467798d851061f01d0ca555c254ef44a8a9822cf7560
+
+- name: Donwloading Kubernetes helm v.2.5.0
+  get_url:
+    url: https://storage.googleapis.com/kubernetes-helm/helm-v2.5.0-linux-amd64.tar.gz
+    dest: /tmp/kubernetes/download
+    checksum: sha256:ade36ef537eede9642c5b4725302470a4978d7ae41e89a37d1142bc9de13b789

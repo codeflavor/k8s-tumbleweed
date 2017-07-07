@@ -1,0 +1,6 @@
+---
+- name: Downloading Docker v1.13.1
+  get_url:
+    url: https://get.docker.com/builds/Linux/x86_64/docker-1.13.1.tgz
+    dest: /tmp/docker/download
+    checksum: sha256:97892375e756fd29a304bd8cd9ffb256c2e7c8fd759e12a55a6336e15100ad75
