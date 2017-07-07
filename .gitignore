@@ -1,0 +1,4 @@
+hosts.yaml
+hosts
+.venv
+ansible-playbook

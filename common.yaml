@@ -1,27 +1,24 @@
 ---
-- hosts: all
-  user: kube
+- hosts: cluster
+  user: '{{ os_user }}'
   become: true
   vars_files:
     - vars/common
-
   roles:
     - role: common
 
-- hosts: k8s-master
-  user: kube
+- hosts: master
+  user: '{{ os_user }}'
   become: true
   vars_files:
     - vars/master
-
   roles:
-    - role: kube-master
+    - role: master
 
-- hosts: k8s-node
-  user: kube
+- hosts: nodes
+  user: '{{ os_user }}'
   become: true
   vars_files:
-    - vars/node
-
+    - vars/nodes
   roles:
-    - role: kube-node
+    - role: nodes

@@ -9,13 +9,16 @@
     name: docker
     state: present
 
+- name: Resetting SSH Connection to reload user groups
+  meta: reset_connection
+
 - name: Creating a default user 'kube' for system wide operations
   user:
     name: kube
     comment: 'Kubernetes system wide operation user'
     state: present
     password: '{{ kube_user_password }}'
-    group:
+    groups:
       - 'kubernetes'
       - 'docker'
     append: yes
@@ -27,19 +30,20 @@
     update_cache: yes
 
 - name: Installing helpful packages
-  zypper: >
-    name = {{ item }} state=latest
-    with_items:
-      - 'nc'
-      - 'nmap'
-      - 'wget'
-      - 'curl'
-      - 'tmux'
-      - 'mlocate'
-      - 'net-tools'
-      - 'nload'
-      - 'htop'
+  zypper:
+    name: '{{ item }}'
+    state: latest
     type: package
+  with_items:
+    - 'ncat'
+    - 'nmap'
+    - 'wget'
+    - 'curl'
+    - 'tmux'
+    - 'mlocate'
+    - 'net-tools'
+    - 'nload'
+    - 'htop'
 
 - name: Creating tmp kubernetes download folder
   file:
