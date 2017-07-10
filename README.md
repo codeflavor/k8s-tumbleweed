@@ -3,6 +3,13 @@
 Deploy a fully working kubernetes (v1.7) cluster on openSUSE Tumbleweed with
 Ansible.  
 
+#### Configuration  
+For instructions on how to configure this deployment you can read the
+[instructions documentation](docs/INSTRUCTIONS.md).
+
+#### Architecture
+For a detailed overview of the platform you can read the [architecture
+documentation](docs/ARCHITECURE.md).
 
 #### Ansible 2.3
 
@@ -47,5 +54,5 @@ ln -s .venv/bin/ansible-playbook ansible-playbook
 
 Now you can use ansible 2.3 from your symlink.
 ```
-./ansible-playbook common.yaml --inventory-file=hosts.yaml -k
+./ansible-playbook site.yaml --inventory-file=inventory.yaml
 ```
