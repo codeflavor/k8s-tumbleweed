@@ -4,5 +4,41 @@
     url: https://get.docker.com/builds/Linux/x86_64/docker-1.13.1.tgz
     dest: /tmp/download/docker
     checksum: sha256:97892375e756fd29a304bd8cd9ffb256c2e7c8fd759e12a55a6336e15100ad75
-  async: 240
-  poll: 5
+  async: '{{ file_async_wait }}'
+  poll: '{{ file_poll_interval }}'
+
+- name: Extracting and installing Docker binaries
+  unarchive:
+    src: /tmp/download/etcd/docker/docker-13.1.1.tgz
+    dest: /tmp/download/
+    copy: no
+
+- command: >
+    'mv /tmp/download/docker/{{ item }} /usr/local/docker/bin/{{ item }}'
+  with_items:
+    - 'docker'
+    - 'dockerd'
+    - 'docker-containerd'
+    - 'docker-containerd-ctr'
+    - 'docker-containerd-shim'
+    - 'docker-init'
+    - 'docker-proxy'
+    - 'docker-runc'
+
+- command: >
+    'mv /tmp/download/docker/completion/bash/docker /etcd/bash_completion.d/docker'
+
+- file:
+    src: '/usr/local/etcd/bin/{{ item }}'
+    dest: '/usr/bin/{{ item }}'
+    state: link
+    # TODO: refactor this and eliminate duplication
+  with_items:
+    - 'docker'
+    - 'dockerd'
+    - 'docker-containerd'
+    - 'docker-containerd-ctr'
+    - 'docker-containerd-shim'
+    - 'docker-init'
+    - 'docker-proxy'
+    - 'docker-runc'

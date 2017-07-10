@@ -1,5 +1,5 @@
 In order to get started, you need to specify how your cluster should be
-structured in the [hosts](../hosts).   
+structured in the [invetory](../inventory.yaml) file.   
 There are 3 roles in this repository that will bootstrap your cluster.
 
 * `[cluster]` -  All nodes that you want to add go here (master/node).

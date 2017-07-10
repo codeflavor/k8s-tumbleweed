@@ -4,13 +4,26 @@
     url: https://github.com/coreos/etcd/releases/download/v3.2.1/etcd-v3.2.1-linux-amd64.tar.gz
     dest: /tmp/download/etcd
     checksum: sha256:d25736567da70a96503b3839e2115d45a9e80d65387e808975b82215bb767a6c
-  async: 240
-  poll: 5
+  async: '{{ file_async_wait }}'
+  poll: '{{ file_poll_interval }}'
 
 - name: Extracting and intalling ETCD binaries
   unarchive:
     src: /tmp/download/etcd/v3.2.1/etcd-v3.2.1-linux-amd64.tar.gz
     dest: /tmp/download/
+    copy: no
 
-- commad: >
-  'mv /tmp/download/etcd-v3.2.1-linux-amd64/'
+- command: >
+    'mv /tmp/download/etcd-v3.2.1-linux-amd64/{{ item }} /usr/local/etcd/bin/{{ item }}'
+  with_items:
+    - 'etcd'
+    - 'etcdctl'
+
+- file:
+    src: '/usr/local/etcd/bin/{{ item }}'
+    dest: '/usr/bin/{{ item }}'
+    state: link
+    # TODO: refactor this and eliminate duplication
+  with_items:
+    - 'etcd'
+    - 'etcdctl'

@@ -2,3 +2,5 @@ hosts.yaml
 hosts
 .venv
 ansible-playbook
+inventory.yaml
+ansible-installer-retries

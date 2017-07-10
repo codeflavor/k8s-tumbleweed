@@ -4,8 +4,8 @@
     url: https://storage.googleapis.com/kubernetes-helm/helm-v2.5.0-linux-amd64.tar.gz
     dest: /tmp/download/helm
     checksum: sha256:ade36ef537eede9642c5b4725302470a4978d7ae41e89a37d1142bc9de13b789
-  async: 240
-  poll: 5
+  async: '{{ file_async_wait }}'
+  poll: '{{ file_poll_interval }}'
 
 - name: Extracting and installing Helm
   unarchive:

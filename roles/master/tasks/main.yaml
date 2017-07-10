@@ -1,2 +1,3 @@
-- include: kubernetes.yaml
-- include: helm.yaml
+---
+- include: 'kubernetes.yaml'
+- include: 'helm.yaml'

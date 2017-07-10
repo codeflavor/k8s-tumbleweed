@@ -1,14 +1,15 @@
 ---
-# register an os_stat and make it conditional
+# TODO: register an os_stat and make this operation conditional.
 - name: Download official Kubernetes 1.7.0 server binaries
   get_url:
     url: https://dl.k8s.io/v1.7.0/kubernetes-server-linux-amd64.tar.gz
     dest: /tmp/download
     checksum: sha256:175fc9360d4f26b5f60b467798d851061f01d0ca555c254ef44a8a9822cf7560
-  async: 240
-  poll: 5
+  async: '{{ file_async_wait }}'
+  poll: '{{ file_poll_interval }}'
 
-- name: Extracting and installing Kubernetes server binaries
+- name: >
+    Extracting and installing Kubernetes server binaries and bash completions
   unarchive:
     src: /tmp/download/kubernetes-server-linux-amd64.tar.gz
     dest: /tmp/download
@@ -49,6 +50,8 @@
     - 'kubefed'
     - 'kubectl'
 
+- command: >
+    '/usr/bin/kubectl completion bash > /etc/bash_completion/bash/kubernetes'
 
 - file:
     path: /tmp/download/kubernetes/server

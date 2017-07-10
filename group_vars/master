@@ -1,0 +1,2 @@
+file_async_wait: 240
+file_poll_interval: 5

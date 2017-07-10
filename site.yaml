@@ -2,20 +2,20 @@
 - hosts: cluster
   become: true
   vars_files:
-    - vars/common
+    - group_vars/common
   roles:
     - role: common
 
 - hosts: master
   become: true
   vars_files:
-    - vars/master
+    - group_vars/master
   roles:
     - role: master
 
 - hosts: nodes
   become: true
   vars_files:
-    - vars/nodes
+    - group_vars/nodes
   roles:
     - role: nodes
