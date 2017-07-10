@@ -15,8 +15,7 @@
     dest: /tmp/download
     copy: no
 
-- command: >
-    'mv /tmp/download/kubernetes/server/bin/{{ item }} /usr/local/kubernetes/bin/{{ item }}'
+- command: 'mv /tmp/download/kubernetes/server/bin/{{ item }} /usr/local/kubernetes/bin'
   with_items:
     - 'kube-proxy'
     - 'kube-apiserver'
@@ -50,9 +49,11 @@
     - 'kubefed'
     - 'kubectl'
 
-- command: >
-    '/usr/bin/kubectl completion bash > /etc/bash_completion/bash/kubernetes'
+- shell: '/usr/bin/kubectl completion bash > kubernetes'
+  args:
+    chdir: '/etc/bash_completion.d'
+    creates: 'kubernetes'
 
 - file:
-    path: /tmp/download/kubernetes/server
+    path: '/tmp/download/kubernetes*'
     state: absent

@@ -13,8 +13,8 @@
     dest: /tmp/download/helm
     copy: no
 
-- command: mv /tmp/download/helm/linux-amd64/helm /usr/bin
+- command: 'mv /tmp/download/helm/linux-amd64/helm /usr/bin'
 
 - file:
-    path: /tmp/download/helm
+    path: '/tmp/download/helm*'
     state: absent

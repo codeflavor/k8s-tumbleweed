@@ -50,7 +50,6 @@
     state: directory
     mode: 0755
   with_items:
-    - '/tmp/download/docker'
     - '/tmp/download/helm'
 
     - '/usr/local/docker/bin'

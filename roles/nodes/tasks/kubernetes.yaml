@@ -12,8 +12,7 @@
     dest: /tmp/download
     copy: no
 
-- command: >
-    'mv /tmp/download/kubernetes/node/bin/{{ item }} /usr/local/kubernetes/bin/{{ item }}'
+- command: 'mv /tmp/download/kubernetes/node/bin/{{ item }} /usr/local/kubernetes/bin'
   with_items:
     - 'kube-proxy'
     - 'kubelet'
@@ -32,5 +31,5 @@
     - 'kubefed'
 
 - file:
-    path: /tmp/download/kubernetes/node
-state: absent
+    path: '/tmp/download/kubernetes*'
+    state: absent

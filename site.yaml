@@ -1,21 +1,26 @@
 ---
 - hosts: cluster
   become: true
+  gather_facts: False
   vars_files:
-    - group_vars/common
+    - group_vars/all.yaml
   roles:
     - role: common
 
 - hosts: master
+  gather_facts: False
   become: true
   vars_files:
-    - group_vars/master
+    - group_vars/master.yaml
+    - group_vars/all.yaml
   roles:
     - role: master
 
 - hosts: nodes
+  gather_facts: False
   become: true
   vars_files:
-    - group_vars/nodes
+    - group_vars/nodes.yaml
+    - group_vars/all.yaml
   roles:
     - role: nodes
