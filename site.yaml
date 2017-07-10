@@ -11,8 +11,8 @@
   gather_facts: False
   become: true
   vars_files:
-    - group_vars/master.yaml
     - group_vars/all.yaml
+    - group_vars/master.yaml
   roles:
     - role: master
 
@@ -20,7 +20,7 @@
   gather_facts: False
   become: true
   vars_files:
-    - group_vars/nodes.yaml
     - group_vars/all.yaml
+    - group_vars/nodes.yaml
   roles:
     - role: nodes
