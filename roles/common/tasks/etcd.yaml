@@ -1,6 +1,16 @@
 ---
-- name: Downloading etcd v3.2.1
+- name: Downloading etcd v3.2.1 binaries
   get_url:
     url: https://github.com/coreos/etcd/releases/download/v3.2.1/etcd-v3.2.1-linux-amd64.tar.gz
-    dest: /tmp/etcd/download
+    dest: /tmp/download/etcd
     checksum: sha256:d25736567da70a96503b3839e2115d45a9e80d65387e808975b82215bb767a6c
+  async: 240
+  poll: 5
+
+- name: Extracting and intalling ETCD binaries
+  unarchive:
+    src: /tmp/download/etcd/v3.2.1/etcd-v3.2.1-linux-amd64.tar.gz
+    dest: /tmp/download/
+
+- commad: >
+  'mv /tmp/download/etcd-v3.2.1-linux-amd64/'

@@ -1,6 +1,5 @@
 ---
 - hosts: cluster
-  user: '{{ os_user }}'
   become: true
   vars_files:
     - vars/common
@@ -8,7 +7,6 @@
     - role: common
 
 - hosts: master
-  user: '{{ os_user }}'
   become: true
   vars_files:
     - vars/master
@@ -16,7 +14,6 @@
     - role: master
 
 - hosts: nodes
-  user: '{{ os_user }}'
   become: true
   vars_files:
     - vars/nodes

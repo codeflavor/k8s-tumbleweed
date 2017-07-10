@@ -1,16 +1,15 @@
 ---
-- name: Creating 'kubernetes' group
+- name: Creating additional user groups
   group:
-    name: kubernetes
+    name: '{{ item }}'
     state: present
+  with_items:
+    - 'docker'
+    - 'kubernetes'
 
-- name: Creating 'docker' group
-  group:
-    name: docker
-    state: present
-
-- name: Resetting SSH Connection to reload user groups
-  meta: reset_connection
+# This will reset ansible's connection so that the new created groups are
+# available to the user
+- meta: reset_connection
 
 - name: Creating a default user 'kube' for system wide operations
   user:
@@ -29,7 +28,7 @@
     state: latest
     update_cache: yes
 
-- name: Installing helpful packages
+- name: Installing additional packages
   zypper:
     name: '{{ item }}'
     state: latest
@@ -47,21 +46,20 @@
 
 - name: Creating tmp kubernetes download folder
   file:
-    path: /tmp/kubernetes/download
+    path: '{{ item }}'
     state: directory
     mode: 0755
+  with_items:
+    - '/tmp/download/docker'
+    - '/tmp/download/helm'
 
-- name: Creating tmp docker download folder
-  file:
-    path: /tmp/docker/download
-    state: directory
-    mode: 0755
+    - '/usr/local/docker/bin'
+    - '/usr/local/kubernetes/bin'
+    - '/usr/local/etcd/bin'
 
-- name: Creating tmp etcd download folder
-  file:
-    path: /tmp/etcd/download
-    state: directory
-    mode: 0755
+    - '/etc/docker'
+    - '/etc/kubernetes'
+    - '/etc/etcd'
 
 - include: docker.yaml
 - include: etcd.yaml
